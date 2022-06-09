@@ -16,20 +16,13 @@ namespace CollectionsMasterConsoleUI
             int[] numbers = new int[50];
 
             //TODO: Create a method to populate the number array with 50 random numbers that are between 0 and 50
-            //Random rnd = new Random();
-
-            //for (int num = 0; num < 50; num++)
-            //{
-            //    numbers[num] = (rnd.Next(1, 50));
-            //}
             Populater(numbers);
 
             //TODO: Print the first number of the array
-
-            Console.WriteLine(numbers[0]);
+            Console.WriteLine($"First Number: {numbers[0]}");
 
             //TODO: Print the last number of the array
-            Console.WriteLine(numbers[49]);
+            Console.WriteLine($"Last Number: {numbers[numbers.Length -1]}");
 
             Console.WriteLine("All Numbers Original");
             //UNCOMMENT this method to print out your numbers from arrays or lists
@@ -44,8 +37,8 @@ namespace CollectionsMasterConsoleUI
 
             Console.WriteLine("All Numbers Reversed:");
 
-            //Array.Reverse(numbers);
-            ReverseArray(numbers);
+            //Array.Reverse(numbers); <------using the .Reverse Method
+            ReverseArray(numbers); //<-------using custom method
 
 
 
@@ -59,7 +52,6 @@ namespace CollectionsMasterConsoleUI
             Console.WriteLine("Multiple of three = 0: ");
 
             ThreeKiller(numbers);
-            NumberPrinter(numbers);
 
             Console.WriteLine("-------------------");
 
@@ -85,7 +77,7 @@ namespace CollectionsMasterConsoleUI
 
             //TODO: Print the capacity of the list to the console
 
-            Console.WriteLine(numberList.Capacity);
+            Console.WriteLine($"Number's List Capacity: {numberList.Capacity}");
 
             //TODO: Populate the List with 50 random numbers between 0 and 50 you will need a method for this
 
@@ -100,7 +92,18 @@ namespace CollectionsMasterConsoleUI
             //Remember: What if the user types "abc" accident your app should handle that!
             Console.WriteLine("What number will you search for in the number list?");
 
-            var searchNumber = Console.ReadLine();
+            bool isANumber;
+            var searchNumber = 0;
+
+            do
+            {
+                isANumber = int.TryParse(Console.ReadLine(), out searchNumber);
+                if (!isANumber)
+                {
+                    Console.WriteLine("Incorrect input, please enter a number: ");
+                }
+            } while (!isANumber);
+
             NumberChecker(numberList, Convert.ToInt32(searchNumber));
 
             Console.WriteLine("-------------------");
@@ -141,11 +144,12 @@ namespace CollectionsMasterConsoleUI
                 {
                     numbers[i] = 0;
                 }
+            NumberPrinter(numbers);
         }
 
         private static void OddKiller(List<int> numberList)
         {
-            foreach (int num in numberList)
+           for(int num = numberList.Count - 1; num >= 0; num--)
             {
                 if (num % 2 == 0)
                 {
@@ -190,12 +194,22 @@ namespace CollectionsMasterConsoleUI
 
         }
 
-        private static void ReverseArray(int[] numbers)
+        private static void ReverseArray(int[] array)
         {
-            for (int i = 49; i > 0; i--)
+            var reversedArray = new int[array.Length];
+            var counter = 0;
+
+            for (var i = array.Length - 1; i >= 0; i--)
             {
-                Console.WriteLine(numbers[i]);
+                reversedArray[counter] = array[i];
+                counter++;
             }
+
+            NumberPrinter(reversedArray);
+            //for (int i = 49; i > 0; i--)
+            //{
+            //    Console.WriteLine(numbers[i]);
+            //}
         }
 
         /// <summary>
